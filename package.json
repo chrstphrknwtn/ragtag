@@ -1,18 +1,19 @@
 {
   "name": "ragtag",
   "version": "0.0.0",
-  "description": "Minimal templating using ES6 tagged template strings.",
+  "description": "Minimal templating using ES6 tagged template literals.",
   "main": "index.js",
   "files": [
     "index.js"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava --verbose"
   },
   "repository": "chrstphrknwtn/ragtag",
   "author": "Christopher Newton (https://github.com/chrstphrknwtn)",
   "license": "MIT",
   "devDependencies": {
+    "ava": "1.0.0-beta.3",
     "xo": "0.20.3"
   }
 }

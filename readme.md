@@ -1,6 +1,6 @@
 # Ragtag
 
-Minimal templating using ES6 tagged template strings.
+Minimal templating using ES6 tagged template literals.
 
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 

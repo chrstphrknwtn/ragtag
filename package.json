@@ -13,7 +13,7 @@
   "author": "Christopher Newton (https://github.com/chrstphrknwtn)",
   "license": "MIT",
   "devDependencies": {
-    "ava": "1.0.0-beta.3",
-    "xo": "0.20.3"
+    "ava": "2.4.0",
+    "xo": "0.25.3"
   }
 }

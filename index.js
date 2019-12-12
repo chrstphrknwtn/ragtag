@@ -1,4 +1,8 @@
 module.exports = (literals, ...expressions) => {
+	if (expressions[0] === false) {
+		return '';
+	}
+
 	let compiledTemplate = '';
 
 	expressions.forEach((expression, i) => {

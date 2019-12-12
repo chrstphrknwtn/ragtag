@@ -34,3 +34,24 @@ test('Nested Object Map', t => {
 
 	t.is(tmp, '<div>1</div><div>2</div><div>3</div><div>4</div>');
 });
+
+test('Ternary expression returns for truthy value', t => {
+	const value = true;
+	const tmp = ragtag`${value ? '<div>True</div>' : '<div>False</div>'}`;
+
+	t.is(tmp, '<div>True</div>');
+});
+
+test('Ternary expression returns for falsey value', t => {
+	const value = false;
+	const tmp = ragtag`${value ? '<div>True</div>' : '<div>False</div>'}`;
+
+	t.is(tmp, '<div>False</div>');
+});
+
+test('Falsey first expression returns empty string', t => {
+	const arr = [];
+	const tmp = ragtag`${arr.length > 0 && ragtag`<div />`}`;
+
+	t.is(tmp, '');
+});

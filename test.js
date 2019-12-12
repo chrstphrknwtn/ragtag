@@ -74,3 +74,11 @@ test('Whitespace in literals is preserved', t => {
 
 	t.is(tmp, 'I am a sentence with spaces.');
 });
+
+test('Do not trim whitepace between expressions', t => {
+	const a = 'Hello';
+	const b = 'world';
+	const tmp = ragtag`<div>${a}, ${b}.</div>`;
+
+	t.is(tmp, '<div>Hello, world.</div>');
+});

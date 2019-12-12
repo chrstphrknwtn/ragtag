@@ -6,7 +6,7 @@ module.exports = (literals, ...expressions) => {
 			expression = expression.join('');
 		}
 
-		compiledTemplate += literals[i].trim();
+		compiledTemplate += expression ? literals[i] : literals[i].trim();
 		if (expression) {
 			compiledTemplate += expression;
 		}

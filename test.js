@@ -55,3 +55,22 @@ test('Falsey first expression returns empty string', t => {
 
 	t.is(tmp, '');
 });
+
+test('Nested Falsey expressions return complete template', t => {
+	const arr = [];
+	const tmp = ragtag`
+	<div>
+		${arr.length > 0 && ragtag`<div/>`}
+		<div />
+		${arr.length > 0 && ragtag`<div/>`}
+	</div>
+	`;
+
+	t.is(tmp, '<div><div /></div>');
+});
+
+test('Whitespace in literals is preserved', t => {
+	const tmp = ragtag`I am a sentence with spaces.`;
+
+	t.is(tmp, 'I am a sentence with spaces.');
+});

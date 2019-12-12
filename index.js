@@ -1,8 +1,4 @@
 module.exports = (literals, ...expressions) => {
-	if (expressions[0] === false) {
-		return '';
-	}
-
 	let compiledTemplate = '';
 
 	expressions.forEach((expression, i) => {
@@ -10,11 +6,13 @@ module.exports = (literals, ...expressions) => {
 			expression = expression.join('');
 		}
 
-		compiledTemplate += literals[i];
-		compiledTemplate += expression;
+		compiledTemplate += literals[i].trim();
+		if (expression) {
+			compiledTemplate += expression;
+		}
 	});
 
-	compiledTemplate += literals[literals.length - 1];
+	compiledTemplate += literals[literals.length - 1].trim();
 
 	return compiledTemplate.trim();
 };

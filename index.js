@@ -1,18 +1,10 @@
 module.exports = (literals, ...expressions) => {
-	let compiledTemplate = '';
-
-	expressions.forEach((expression, i) => {
+	return literals.reduce((accumulator, literal, index) => {
+		let expression = expressions[index - 1];
 		if (Array.isArray(expression)) {
 			expression = expression.join('');
 		}
 
-		compiledTemplate += expression ? literals[i] : literals[i].trim();
-		if (expression) {
-			compiledTemplate += expression;
-		}
+		return accumulator + (expression ? expression : '') + literal;
 	});
-
-	compiledTemplate += literals[literals.length - 1].trim();
-
-	return compiledTemplate.trim();
 };

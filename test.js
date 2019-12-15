@@ -10,27 +10,14 @@ test('Default Template Literal', t => {
 
 test('Nested Array Map', t => {
 	const arr = [1, 2, 3, 4];
-	const tmp = ragtag`
-		${arr.map(a => ragtag`
-			<div>${a}</div>
-		`)}
-	`;
+	const tmp = ragtag`${arr.map(a => ragtag`<div>${a}</div>`)}`;
 
 	t.is(tmp, '<div>1</div><div>2</div><div>3</div><div>4</div>');
 });
 
 test('Nested Object Map', t => {
-	const obj = {
-		a: 1,
-		b: 2,
-		c: 3,
-		d: 4
-	};
-	const tmp = ragtag`
-		${Object.keys(obj).map(key => ragtag`
-			<div>${obj[key]}</div>
-		`)}
-	`;
+	const obj = {a: 1, b: 2, c: 3, d: 4};
+	const tmp = ragtag`${Object.keys(obj).map(key => ragtag`<div>${obj[key]}</div>`)}`;
 
 	t.is(tmp, '<div>1</div><div>2</div><div>3</div><div>4</div>');
 });
@@ -51,20 +38,13 @@ test('Ternary expression returns for falsey value', t => {
 
 test('Falsey first expression returns empty string', t => {
 	const arr = [];
-	const tmp = ragtag`${arr.length > 0 && ragtag`<div />`}`;
+	const tmp = ragtag`${arr.length > 0 && '<div />'}`;
 
 	t.is(tmp, '');
 });
 
 test('Nested Falsey expressions return complete template', t => {
-	const arr = [];
-	const tmp = ragtag`
-	<div>
-		${arr.length > 0 && ragtag`<div/>`}
-		<div />
-		${arr.length > 0 && ragtag`<div/>`}
-	</div>
-	`;
+	const tmp = ragtag`<div>${false && '<div/>'}<div />${false && '<div/>'}</div>`;
 
 	t.is(tmp, '<div><div /></div>');
 });

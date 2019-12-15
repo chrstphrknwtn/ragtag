@@ -2,6 +2,17 @@
   "name": "ragtag",
   "version": "0.0.6",
   "description": "Minimal templating using ES6 tagged template literals.",
+  "keywords": [
+    "es6",
+    "es6-tag",
+    "tag",
+    "tagged",
+    "template",
+    "templating",
+    "literal",
+    "literals",
+    "html"
+  ],
   "main": "index.js",
   "files": [
     "index.js"

@@ -1,6 +1,6 @@
 {
   "name": "ragtag",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Minimal templating using ES6 tagged template literals.",
   "keywords": [
     "es6",

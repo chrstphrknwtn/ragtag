@@ -11,7 +11,7 @@ Useful for basic templating when you don't need a full-blown templating system, 
 npm install ragtag
 ````
 
-## Loops
+## Map
 
 ````javascript
 const ragtag = require('ragtag');
@@ -61,8 +61,8 @@ const output = ragtag`
 </div>
 ````
 
-## And operator
-Using regular template literals this will return `false` in your template, instead of nothing.
+## And
+Using regular template literals like this will result in `false` turning up in in your rendered HTML (instead of nothing).
 
 ````javascript
 const people = ['Alice', 'Bob', 'Carol'];

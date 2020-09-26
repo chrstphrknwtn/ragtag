@@ -2,32 +2,35 @@
 
 Minimal templating using ES6 tagged template literals.
 
-Useful for basic templating when you don't need a full-blown templating system, but still need a bit more than template literals provide.
-
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
+For simple things that don't need a complete template system, but still a bit more than template literals provide.
 
 ## Install
-````shell
+
+```shell
 npm install ragtag
-````
+```
 
-## Map
+## Usage
 
-````javascript
-const ragtag = require('ragtag');
+Ragtag basically makes tagged template literals work as you would expect them to work, ie. not stinking up your content with `false`, `null`, `undefined` or `,` all over the place.
+
+### Map
+
+```javascript
+const html = require('ragtag');
 const people = ['Alice', 'Bob', 'Carol'];
 
-const output = ragtag`
-<div>
-  <p>People invited to my party:</p>
-  <ul>
-    ${people.map(person => '<li>${person}</li>')}
-  </ul>
-</div>
+const output = html`
+  <div>
+    <p>People invited to my party:</p>
+    <ul>
+      ${people.map(person => `<li>${person}</li>`)}
+    </ul>
+  </div>
 `;
-````
+```
 
-````html
+```html
 <div>
   <p>People invited to my party:</p>
   <ul>
@@ -36,129 +39,129 @@ const output = ragtag`
     <li>Carol</li>
   </ul>
 </div>
-````
+```
 
-## Ternary
+### Ternary
 
-````javascript
-const ragtag = require('ragtag');
+```javascript
+const html = require('ragtag');
 const people = ['Alice', 'Bob', 'Carol'];
 
-const output = ragtag`
-<div>
-  ${people.length < 6 ? (
-    '<p>It\'s still a little lonely.</p>'
-  ) : (
-    '<small>My party is full.</small>'
-  )}
-</div>
+const output = html`
+  <div>
+    ${people.length < 6
+      ? '<p>This party sucks.</p>'
+      : '<small>This party is just ok.</small>'}
+  </div>
 `;
-````
+```
 
-````html
+```html
 <div>
-  <p>It's still a little lonely.</p>
+  <p>This party sucks.</p>
 </div>
-````
+```
 
-## And
-Using regular template literals like this will result in `false` turning up in in your rendered HTML (instead of nothing).
+### And
 
-````javascript
-const people = ['Alice', 'Bob', 'Carol'];
+#### Falsey
 
-const output = ragtag`
-<div>
-  ${people.length > 0 && '<div>I\'m having a party!</div>'}
-</div>
+```javascript
+const html = require('ragtag');
+const isCool = false;
+
+const output = html`
+  <div>
+    ${isCool && '<div>Has friends</div>'}
+  </div>
 `;
-````
+```
 
-````html
+```html
+<div></div>
+```
+
+#### Truthy
+
+```javascript
+const html = require('ragtag');
+const people = [
+  'Alice',
+  'Bob',
+  'Carol',
+  'Dave',
+  'Eddy',
+  'Frank',
+  'George',
+  'Henry',
+  'Isaac',
+  'John',
+  'Kimberly',
+  'Lucy'
+];
+
+const output = html`
+  <div>
+    ${people.length > 10 && '<div>Party time!</div>'}
+  </div>
+`;
+```
+
+```html
 <div>
-  <div>I'm having a party!</div>
+  <div>Party time!</div>
 </div>
-````
+```
 
-## Objects
+### Function components
 
-````javascript
+```javascript
+const html = require('ragtag');
+
 const wines = [
   {
     name: 'Stadt Krems',
     varietal: 'Grüner Veltliner',
-    region: 'Kremstal',
-    vintage: 2018
+    region: 'Kremstal'
   },
   {
     name: 'Terrassen Federspiel',
     varietal: 'Grüner Veltliner',
-    region: 'Wachau',
     vintage: 2016
   }
 ];
 
-const output = ragtag`
-<div>
-  <h1>It will be a fun party:</h1>
-  <ul>
-  ${wines.map(wine => ragtag`
-    <li>
-      <h2>${wine.name}</h2>
-      <small>${wine.varietal} - ${wine.region} - ${wine.vintage}</small>
-    </li>
-    `)}
-  </ul>
-</div>
-`;
-````
-
-````html
-<div>
-  <h1>It will be a fun party:</h1>
-  <ul>
-    <li>
-      <h2>Stadt Krems</h2>
-      <small>Grüner Veltliner - Kremstal - 2018</small>
-    </li>
-    <li>
-      <h2>Terrassen Federspiel</h2>
-      <small>Grüner Veltliner - Wachau - 2016</small>
-    </li>
-  </ul>
-</div>
-````
-
-## Function components
-
-````javascript
-const wineListItem = ({name, varietal, region, vintage}) => ragtag`
-<li>
-  <h2>${name}</h2>
-  <small>${varietal} - ${region} - ${vintage}</small>
-</li>
+const wineListItem = ({ name, varietal, region, vintage }) => html`
+  <li>
+    <h2>${name}</h2>
+    <small>
+      ${varietal}${region && ` - ${region}`}${vintage && ` - ${region}`}
+    </small>
+  </li>
 `;
 
-const wineList = wines => ragtag`
-  ${wines && wines.length > 0 && (ragtag`
-    <ul>
-      ${wines.map(wine => wineListItem(wine))}
-    </ul>
-  `)}
+const wineList = wines => html`
+  ${wines &&
+    wines.length > 0 &&
+    html`
+      <ul>
+        ${wines.map(wine => wineListItem(wine))}
+      </ul>
+    `}
 `;
 
 const output = wineList(wines);
-````
+```
 
-````html
+```html
 <ul>
   <li>
     <h2>Stadt Krems</h2>
-    <small>Grüner Veltliner - Kremstal - 2018</small>
+    <small>Grüner Veltliner - Kremstal</small>
   </li>
   <li>
     <h2>Terrassen Federspiel</h2>
-    <small>Grüner Veltliner - Wachau - 2016</small>
+    <small>Grüner Veltliner - 2016</small>
   </li>
 </ul>
-````
+```

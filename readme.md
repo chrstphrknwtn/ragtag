@@ -1,8 +1,8 @@
 # Ragtag
 
-> Streamlined ES6 Tagged Template Literal Templating.
+> No-Frills ES6 Templating
 
-Ragtag streamlines template literals for basic needs, without `false`, `null`, `undefined`, or commas stinking up your content.
+Ragtag cleans up template literals, making sure `false`, `null`, `undefined`, and commas don't stink up your content.
 
 ## Install
 

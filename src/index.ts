@@ -1,10 +1,10 @@
 export default (literals: TemplateStringsArray, ...expressions: Array<any>) => {
   return literals.reduce((accumulator, literal, index) => {
-    let expression = expressions[index - 1];
+    let expression = expressions[index - 1]
     if (Array.isArray(expression)) {
-      expression = expression.join('');
+      expression = expression.join('')
     }
 
-    return accumulator + (expression ? expression : '') + literal;
-  });
-};
+    return accumulator + (expression ? expression : '') + literal
+  })
+}

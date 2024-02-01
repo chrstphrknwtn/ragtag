@@ -1,8 +1,8 @@
 # Ragtag
 
-Minimal templating using ES6 tagged template literals.
+> Streamlined ES6 Tagged Template Literal Templating.
 
-For simple things that don't need a complete template system, but still a bit more than template literals provide.
+Ragtag streamlines template literals for basic needs, without `false`, `null`, `undefined`, or commas stinking up your content.
 
 ## Install
 
@@ -12,69 +12,53 @@ npm install ragtag
 
 ## Usage
 
-Ragtag basically makes tagged template literals work as you would expect them to work, ie. not stinking up your content with `false`, `null`, `undefined` or `,` all over the place.
-
 ### Map
 
 ```javascript
-const html = require('ragtag');
-const people = ['Alice', 'Bob', 'Carol'];
+import html from 'ragtag'
+const people = ['Alice', 'Bob', 'Carol']
 
 const output = html`
-  <div>
-    <p>People invited to my party:</p>
-    <ul>
-      ${people.map(person => `<li>${person}</li>`)}
-    </ul>
-  </div>
-`;
+  <h3>Door list:</h3>
+  <ul>
+    ${people.map(person => `<li>${person}</li>`)}
+  </ul>`
 ```
 
 ```html
-<div>
-  <p>People invited to my party:</p>
-  <ul>
-    <li>Alice</li>
-    <li>Bob</li>
-    <li>Carol</li>
-  </ul>
-</div>
+<h3>Door list:</h3>
+<ul>
+  <li>Alice</li>
+  <li>Bob</li>
+  <li>Carol</li>
+</ul>
 ```
 
 ### Ternary
 
 ```javascript
-const html = require('ragtag');
-const people = ['Alice', 'Bob', 'Carol'];
+import html from 'ragtag'
+const people = ['Alice', 'Bob', 'Carol', 'Dave', 'Eddy', 'Frank', 'George']
 
 const output = html`
-  <div>
-    ${people.length < 6
-      ? '<p>This party sucks.</p>'
-      : '<small>This party is just ok.</small>'}
-  </div>
-`;
+  <p>
+    This party ${people.length < 6 ? 'sucks.' : 'is ok.'}
+  </p>`
 ```
 
 ```html
-<div>
-  <p>This party sucks.</p>
-</div>
+<p>This party is ok.</p>
 ```
 
-### And
+### And operator
 
 #### Falsey
 
 ```javascript
-const html = require('ragtag');
-const isCool = false;
+import html from 'ragtag'
+const isFun = false
 
-const output = html`
-  <div>
-    ${isCool && '<div>Has friends</div>'}
-  </div>
-`;
+const output = html`<div>${isFun && '<p>Has friends</p>'}</div>`
 ```
 
 ```html
@@ -84,7 +68,7 @@ const output = html`
 #### Truthy
 
 ```javascript
-const html = require('ragtag');
+import html from 'ragtag'
 const people = [
   'Alice',
   'Bob',
@@ -98,27 +82,33 @@ const people = [
   'John',
   'Kimberly',
   'Lucy'
-];
+]
 
 const output = html`
   <div>
-    ${people.length > 10 && '<div>Party time!</div>'}
-  </div>
-`;
+    ${people.length > 10 && '<p>Party time!</p>'}
+  </div>`
 ```
 
 ```html
 <div>
-  <div>Party time!</div>
+  <p>Party time!</p>
 </div>
 ```
 
-### Function components
+### Composable template functions
 
-```javascript
-const html = require('ragtag');
+```typescript
+import html from 'ragtag'
 
-const wines = [
+interface Wine {
+  name: string
+  varietal: string
+  region?: string
+  vintage?: number
+}
+
+const wines: Wine[] = [
   {
     name: 'Stadt Krems',
     varietal: 'Grüner Veltliner',
@@ -129,39 +119,42 @@ const wines = [
     varietal: 'Grüner Veltliner',
     vintage: 2016
   }
-];
+]
 
-const wineListItem = ({ name, varietal, region, vintage }) => html`
-  <li>
-    <h2>${name}</h2>
-    <small>
-      ${varietal}${region && ` - ${region}`}${vintage && ` - ${region}`}
-    </small>
-  </li>
-`;
+const wineListItem = ({ name, varietal, region, vintage }: Wine) => html`
+<li>
+  <h2>${name}</h2>
+  <small>
+    ${varietal}${region && ` - ${region}`}${vintage && ` - ${vintage}`}
+  </small>
+</li>`
 
-const wineList = wines => html`
-  ${wines &&
-    wines.length > 0 &&
-    html`
-      <ul>
-        ${wines.map(wine => wineListItem(wine))}
-      </ul>
-    `}
-`;
+const wineList = (wines: Wine[]) => html`
+<ul>
+  ${wines.map(wine => wineListItem(wine))}
+</ul>`
 
-const output = wineList(wines);
+const template = (wines: Wine[]) => html`
+<div>
+  <h1>Wine List</h1>
+  ${wines.length > 0 ? wineList(wines) : '<p>Sold Out!</p>'}
+</div>`
+
+const output = template(wines)
 ```
 
 ```html
-<ul>
-  <li>
-    <h2>Stadt Krems</h2>
-    <small>Grüner Veltliner - Kremstal</small>
-  </li>
-  <li>
-    <h2>Terrassen Federspiel</h2>
-    <small>Grüner Veltliner - 2016</small>
-  </li>
-</ul>
+<div>
+  <h1>Wine List</h1>
+  <ul>
+    <li>
+      <h2>Stadt Krems</h2>
+      <small>Grüner Veltliner - Kremstal</small>
+    </li>
+    <li>
+      <h2>Terrassen Federspiel</h2>
+      <small>Grüner Veltliner - 2016</small>
+    </li>
+  </ul>
+</div>
 ```

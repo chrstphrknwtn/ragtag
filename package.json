@@ -25,13 +25,6 @@
       "pre-commit": "tsdx lint"
     }
   },
-  "prettier": {
-    "arrowParens": "avoid",
-    "printWidth": 80,
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "none"
-  },
   "name": "ragtag",
   "description": "Minimal templating using ES6 tagged template literals.",
   "keywords": [

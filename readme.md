@@ -1,6 +1,6 @@
 # Ragtag
 
-> No-Frills ES6 Templating
+> No-Frills Templating
 
 Ragtag cleans up template literals, making sure `false`, `null`, `undefined`, and commas don't stink up your content.
 
